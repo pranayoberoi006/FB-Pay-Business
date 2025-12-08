@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FB Pay Business - Admin Dashboard</title>
+  <style>
+    body { font-family: Arial; background:#eef3ff; padding:20px; }
+    h1 { color:#0057ff; }
+    table { width:100%; border-collapse: collapse; background:white; }
+    th, td { padding:10px; border:1px solid #ccc; text-align:left; }
+    th { background:#0057ff; color:white; }
+  </style>
+</head>
+<body>
+
+<h1>FB Pay Business - Admin Dashboard</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th><th>Phone</th><th>Email</th>
+      <th>Amount</th><th>Payment ID</th><th>Order ID</th><th>Date</th>
+    </tr>
+  </thead>
+  <tbody id="data"></tbody>
+</table>
+
+<script>
+fetch("http://localhost:5000/admin/payments")
+  .then(res => res.json())
+  .then(data => {
+    let rows = "";
+    data.forEach(p => {
+      rows += `<tr>
+        <td>${p.name}</td>
+        <td>${p.phone}</td>
+        <td>${p.email}</td>
+        <td>₹${p.amount}</td>
+        <td>${p.payment_id}</td>
+        <td>${p.order_id}</td>
+        <td>${new Date(p.date).toLocaleString()}</td>
+      </tr>`;
+    });
+    document.getElementById("data").innerHTML = rows;
+  });
+</script>
+
+</body>
+</html>
