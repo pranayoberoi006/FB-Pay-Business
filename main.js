@@ -25,7 +25,8 @@ document.getElementById("userForm").onsubmit = async function(e){
         "order_id": order.id,
 
         "handler": async function (response){
-            await fetch("http://localhost:5000/payment-success", {
+            await fetch("https://fb-pay-business-backend.onrender.com/cashfree-success", {
+
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({
