@@ -2,14 +2,6 @@
 async function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const errorBox = document.getElementById("errorText");
-
-    errorBox.innerText = ""; // clear previous errors
-
-    if (!email || !password) {
-        errorBox.innerText = "Please enter email & password.";
-        return;
-    }
 
     const BACKEND = "https://fb-pay-business-backend.onrender.com";
 
@@ -20,9 +12,8 @@ async function login() {
             body: JSON.stringify({ email, password })
         });
 
-        // If backend returned 404 / 500 etc.
         if (!res.ok) {
-            errorBox.innerText = "Invalid login or server error.";
+            document.getElementById("errorText").innerText = "Invalid login or server error";
             return;
         }
 
@@ -30,34 +21,18 @@ async function login() {
         console.log("LOGIN RESPONSE:", data);
 
         if (data.error) {
-            errorBox.innerText = data.error;  // shows "Incorrect password"
+            document.getElementById("errorText").innerText = data.error;
             return;
         }
 
-        // Save login credentials
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         localStorage.setItem("name", data.name);
 
-        // Redirect to dashboard
         window.location.href = "dashboard.html";
-
     } catch (err) {
-        console.error(err);
-        errorBox.innerText = "Server not responding!";
+        console.log(err);
+        document.getElementById("errorText").innerText = "Server error!";
     }
 }
-
-// ----------------- SHOW/HIDE PASSWORD -----------------
-document.getElementById("togglePassword").addEventListener("click", function () {
-    const passField = document.getElementById("password");
-
-    if (passField.type === "password") {
-        passField.type = "text";
-        this.textContent = "🙈"; // hide icon
-    } else {
-        passField.type = "password";
-        this.textContent = "👁️"; // show icon
-    }
-});
 </script>
