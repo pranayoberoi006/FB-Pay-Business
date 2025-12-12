@@ -12,11 +12,6 @@ async function login() {
             body: JSON.stringify({ email, password })
         });
 
-        if (!res.ok) {
-            document.getElementById("errorText").innerText = "Invalid login or server error";
-            return;
-        }
-
         const data = await res.json();
         console.log("LOGIN RESPONSE:", data);
 
@@ -25,6 +20,7 @@ async function login() {
             return;
         }
 
+        // Save data locally
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         localStorage.setItem("name", data.name);
