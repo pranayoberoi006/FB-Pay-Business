@@ -84,14 +84,36 @@ lottie.loadAnimation({
 // ---- FIX STARTS HERE ----
 
 // Cashfree returns cf_payment_id, not payment_id
+// Read parameters from URL
 const params = new URLSearchParams(window.location.search);
 
-const order_id = params.get("order_id");
-const payment_id =
-      params.get("cf_payment_id") ||  // Real Cashfree payment ID
-      params.get("payment_id");       // backup
+const user = {
+    name: params.get("name"),
+    phone: params.get("phone"),
+    email: params.get("email"),
+    amount: params.get("amount")
+};
 
-const user = JSON.parse(localStorage.getItem("paymentUser"));
+const order_id = params.get("order_id");
+const payment_id = params.get("payment_id");
+
+// Send success data to backend
+fetch("https://fb-pay-business-backend.onrender.com/cashfree-success", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        amount: user.amount,
+        order_id,
+        payment_id
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log("Success Response:", data);
+});
 
 // Send to backend
 fetch("https://fb-pay-business-backend.onrender.com/cashfree-success", {
