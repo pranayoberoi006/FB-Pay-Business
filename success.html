@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Payment Successful | FB Pay Business</title>
 
-<!-- Lottie Animation CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.0/lottie.min.js"></script>
 
 <style>
@@ -31,11 +30,6 @@
         animation: fadeIn 0.7s ease;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(25px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
     #lottie-success {
         width: 160px;
         height: 160px;
@@ -43,72 +37,42 @@
     }
 
     h2 {
-        margin-top: -5px;
         font-size: 26px;
         color: #0057ff;
         font-weight: 700;
     }
 
-    p {
-        font-size: 15px;
-        margin: 8px 0;
-    }
-
-    #details {
-        margin-top: 15px;
-        background: #f5f7ff;
-        padding: 12px;
-        border-radius: 12px;
-        text-align: left;
-        font-size: 14px;
-        line-height: 22px;
-        color: #444;
-        display: none;
-    }
-
-    .btn-download {
-        margin-top: 18px;
-        padding: 12px 20px;
+    .btn {
+        margin-top: 25px;
+        padding: 14px 20px;
         background: #0057ff;
         color: #fff;
         border: none;
         border-radius: 8px;
-        font-size: 15px;
+        font-size: 16px;
         cursor: pointer;
         width: 100%;
-        transition: 0.3s ease;
         display: none;
     }
 
-    .btn-download:hover {
+    .btn:hover {
         background: #003fcc;
     }
 </style>
-
 </head>
+
 <body>
 
 <div class="success-box">
-
-    <!-- Lottie Animation Container -->
     <div id="lottie-success"></div>
 
     <h2>Payment Successful</h2>
-    <p>Your payment has been processed successfully.</p>
-    <p>📩 Your receipt is being prepared...</p>
+    <p>Your receipt will download soon.</p>
 
-    <!-- Payment Details -->
-    <div id="details"></div>
-
-    <!-- Download Receipt Button -->
-    <button id="downloadBtn" class="btn-download">⬇ Download Receipt</button>
-
+    <button id="downloadBtn" class="btn">⬇ Download Receipt</button>
 </div>
 
 <script>
-// ------------------------
-// LOAD LOTTIE ANIMATION
-// ------------------------
 lottie.loadAnimation({
     container: document.getElementById("lottie-success"),
     renderer: "svg",
@@ -117,19 +81,20 @@ lottie.loadAnimation({
     path: "https://assets8.lottiefiles.com/packages/lf20_jbrw3hcz.json"
 });
 
-// ------------------------
-// READ URL PARAMETERS
-// ------------------------
+// ---- FIX STARTS HERE ----
+
+// Cashfree returns cf_payment_id, not payment_id
 const params = new URLSearchParams(window.location.search);
+
 const order_id = params.get("order_id");
-const payment_id = params.get("payment_id") || params.get("cf_payment_id");
+const payment_id =
+      params.get("cf_payment_id") ||  // Real Cashfree payment ID
+      params.get("payment_id");       // backup
 
 const user = JSON.parse(localStorage.getItem("paymentUser"));
 
-// ------------------------
-// SEND SUCCESS TO BACKEND
-// ------------------------
-fetch("http://localhost:5000/payment-success", {
+// Send to backend
+fetch("https://fb-pay-business-backend.onrender.com/cashfree-success", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -143,15 +108,7 @@ fetch("http://localhost:5000/payment-success", {
 })
 .then(res => res.json())
 .then(data => {
-    if (data.receipt_url) {
-        // Show Download Button
-        const btn = document.getElementById("downloadBtn");
-        btn.style.display = "block";
-
-        btn.onclick = () => {
-            window.open(data.receipt_url, "_blank");
-        };
-    }
+    console.log("SUCCESS RESPONSE:", data);
 });
 </script>
 

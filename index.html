@@ -4,7 +4,7 @@
   <title>FB Pay Business - Secure Payment</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- NEW CASHFREE SDK (Correct One) -->
+  <!-- Cashfree SDK -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 </head>
 
@@ -43,12 +43,11 @@ document.getElementById("userForm").onsubmit = async function(e){
         amount: document.getElementById("amount").value
     };
 
-    // Save user data for success page
+    // Save for success page
     localStorage.setItem("paymentUser", JSON.stringify(userData));
 
-    // Create order from backend
+    // PRODUCTION BACKEND
     let order = await fetch("https://fb-pay-business-backend.onrender.com/create-order", {
-
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(userData)
@@ -56,14 +55,11 @@ document.getElementById("userForm").onsubmit = async function(e){
 
     order = await order.json();
 
-    console.log("ORDER RESPONSE:", order);
-
     if (!order.payment_session_id) {
-        alert("Payment session failed. Check backend console.");
+        alert("Payment session failed.");
         return;
     }
 
-    // Initialize Cashfree Checkout
     const cashfree = Cashfree({ mode: "sandbox" });
 
     cashfree.checkout({
