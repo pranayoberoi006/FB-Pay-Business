@@ -7,7 +7,7 @@
 </head>
 
 <style>
-/* basic styling so your page doesn't appear blank */
+/* PAGE STYLING */
 .login-body {
   background: #f4f6ff;
   font-family: Poppins, sans-serif;
@@ -95,7 +95,6 @@ function togglePassword() {
 async function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-
     const BACKEND = "https://fb-pay-business-backend.onrender.com";
 
     try {
@@ -118,6 +117,7 @@ async function login() {
         localStorage.setItem("name", data.name);
 
         window.location.href = "dashboard.html";
+
     } catch (err) {
         console.log("ERR:", err);
         document.getElementById("errorText").innerText = "Server error!";

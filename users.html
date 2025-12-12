@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Users | FB Pay Business</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>FB Pay Business</h2>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="users.html" class="active">Manage Users</a>
+    <a href="#" onclick="logout()">Logout</a>
+</div>
+
+<div class="main">
+    <h1>All Users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+    </table>
+</div>
+
+<script src="users.js"></script>
+</body>
+</html>
