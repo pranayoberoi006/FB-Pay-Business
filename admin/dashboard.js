@@ -2,55 +2,63 @@ const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 const name = localStorage.getItem("name");
 
-document.getElementById("adminName").innerText = name;
+if (!token) {
+    window.location.href = "login.html";
+}
 
-// Hide Manage Users for admins/viewers
+document.getElementById("adminName").innerText = name || "Admin";
+
+// hide users menu if not superadmin
 if (role !== "superadmin") {
     document.getElementById("usersMenu").style.display = "none";
 }
 
-if (!token) window.location.href = "login.html";
-
-// Fetch Payments
+// LOAD PAYMENTS
 async function loadPayments() {
-    const res = await fetch("https://fb-pay-business-backend.onrender.com/admin-api/payments", {
-        headers: { Authorization: "Bearer " + token }
-    });
+    try {
+        const res = await fetch(
+            "https://fb-pay-business-backend.onrender.com/admin-api/payments",
+            {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
 
-    const data = await res.json();
+        if (!res.ok) {
+            console.error("Payments API failed");
+            return;
+        }
 
-    let total = 0;
-    document.getElementById("paymentsTable").innerHTML = "";
+        const data = await res.json();
 
-    data.forEach(p => {
-        total += p.amount;
+        let totalAmount = 0;
+        const table = document.getElementById("paymentsTable");
+        table.innerHTML = "";
 
-        document.getElementById("paymentsTable").innerHTML += `
-            <tr>
-                <td>${p.name}</td>
-                <td>₹${p.amount}</td>
-                <td>${p.status}</td>
-                <td>${p.order_id}</td>
-                <td>${new Date(p.date).toLocaleString()}</td>
-            </tr>
-        `;
-    });
+        data.forEach(p => {
+            totalAmount += Number(p.amount || 0);
 
-    document.getElementById("totalPayments").innerText = data.length;
-    document.getElementById("totalAmount").innerText = "₹" + total;
+            table.innerHTML += `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>₹${p.amount}</td>
+                    <td>${p.status}</td>
+                    <td>${p.order_id}</td>
+                    <td>${new Date(p.date).toLocaleString()}</td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("totalPayments").innerText = data.length;
+        document.getElementById("totalAmount").innerText = "₹" + totalAmount;
+
+    } catch (err) {
+        console.error("Dashboard error:", err);
+    }
 }
 
 loadPayments();
-
-// Search filter
-function searchPayments() {
-    const value = document.getElementById("searchBox").value.toLowerCase();
-    const rows = document.querySelectorAll("#paymentsTable tr");
-
-    rows.forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
-    });
-}
 
 function logout() {
     localStorage.clear();
