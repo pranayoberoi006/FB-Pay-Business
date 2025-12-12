@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background: #f4f6ff;
+}
+
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #0057ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.sidebar {
+    width: 240px;
+    background: #0a1d4a;
+    height: 100vh;
+    position: fixed;
+    padding-top: 20px;
+    color: white;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: #cdd4ff;
+    text-decoration: none;
+}
+
+.sidebar a.active, .sidebar a:hover {
+    background: #132b6b;
+}
+
+.main {
+    margin-left: 260px;
+    padding: 30px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    width: 220px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 12px;
+    border-bottom: 1px solid #eef;
+}
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.BADGE.SUCCESS {
+  background-color: #28a745;
+}
+
+.BADGE.PENDING {
+  background-color: #ffc107;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.top-bar {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}

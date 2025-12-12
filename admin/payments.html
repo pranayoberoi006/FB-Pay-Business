@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payments | FB Pay Business Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>FB Pay</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="payments.html" class="active">Payments</a>
+  <a href="users.html">Users</a>
+  <a href="#" id="logoutBtn">Logout</a>
+</div>
+
+<div class="main">
+  <h1>Payments</h1>
+
+  <div class="top-bar">
+    <input type="text" id="searchInput" placeholder="Search by name / email / order ID">
+    <select id="statusFilter">
+      <option value="">All Status</option>
+      <option value="SUCCESS">SUCCESS</option>
+      <option value="PENDING">PENDING</option>
+    </select>
+  </div>
+
+  <table id="paymentsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Order ID</th>
+        <th>Payment ID</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+</div>
+
+<script src="payments.js"></script>
+</body>
+</html>

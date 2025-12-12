@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | FB Pay Business</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>FB Pay Business</h2>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="users.html" id="usersMenu">Manage Users</a>
+    <a href="#" onclick="logout()">Logout</a>
+</div>
+
+<div class="main">
+    <h1>Welcome, <span id="adminName"></span></h1>
+    
+    <div class="cards">
+        <div class="card">
+            <h3>Total Payments</h3>
+            <span id="totalPayments">0</span>
+        </div>
+        <div class="card">
+            <h3>Total Revenue</h3>
+            <span id="totalAmount">₹0</span>
+        </div>
+    </div>
+
+    <h2>Recent Transactions</h2>
+    <input id="searchBox" type="text" placeholder="Search by name, email, order ID" onkeyup="searchPayments()">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Order ID</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="paymentsTable"></tbody>
+    </table>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
