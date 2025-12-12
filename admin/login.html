@@ -1,4 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Admin Login | FB Pay Business</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<style>
+/* basic styling so your page doesn't appear blank */
+.login-body {
+  background: #f4f6ff;
+  font-family: Poppins, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background: #fff;
+  padding: 30px;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  background: #0057ff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.show-pass {
+  position: absolute;
+  margin-left: 260px;
+  margin-top: -35px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #0057ff;
+}
+
+#errorText {
+  color: red;
+  margin-top: 10px;
+}
+</style>
+
+<body class="login-body">
+
+<div class="login-container">
+  <h2>FB Pay Business – Admin Login</h2>
+
+  <input id="email" type="email" placeholder="Enter Email" />
+
+  <div style="position: relative;">
+      <input id="password" type="password" placeholder="Enter Password" />
+      <span class="show-pass" onclick="togglePassword()">Show</span>
+  </div>
+
+  <button onclick="login()" class="btn-primary">Login</button>
+
+  <p id="errorText"></p>
+</div>
+
 <script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    const btn = document.querySelector(".show-pass");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+        btn.innerText = "Hide";
+    } else {
+        pass.type = "password";
+        btn.innerText = "Show";
+    }
+}
+
 async function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -20,15 +113,17 @@ async function login() {
             return;
         }
 
-        // Save data locally
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         localStorage.setItem("name", data.name);
 
         window.location.href = "dashboard.html";
     } catch (err) {
-        console.log(err);
+        console.log("ERR:", err);
         document.getElementById("errorText").innerText = "Server error!";
     }
 }
 </script>
+
+</body>
+</html>
